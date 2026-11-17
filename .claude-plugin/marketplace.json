@@ -1,0 +1,14 @@
+{
+  "name": "csm-skills",
+  "owner": {
+    "name": "John Kelly"
+  },
+  "description": "Claude skills for Contentstack Customer Success Managers.",
+  "plugins": [
+    {
+      "name": "csm-customer-collab",
+      "source": "./",
+      "description": "Say \"help me with [customer]\": evidence-first account read, strong/weak use cases, the next step toward DXP, 4-5 discovery questions and a saved brief."
+    }
+  ]
+}

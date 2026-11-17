@@ -1,0 +1,6 @@
+{
+  "name": "csm-customer-collab",
+  "version": "1.0.0",
+  "description": "Customer collaboration for Contentstack CSMs: say \"help me with [customer]\" for the evidence, a few questions, a DXP path and a saved brief.",
+  "author": { "name": "John Kelly" }
+}

@@ -1,0 +1,5 @@
+dist/
+.superpowers/
+.DS_Store
+__pycache__/
+tests/banned-names.txt

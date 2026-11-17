@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{customer}}: meeting brief</title>
+<!--
+  One-page meeting brief. The skill replaces every {{placeholder}} and repeats the marked rows.
+  Internal only: it is saved next to the Markdown brief and never published, uploaded or sent.
+  Prints on one US Letter page (File > Print, or Save as PDF).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1A1919; --card: #292928; --line: #393838; --text: #F5F5F4; --muted: #9A9998; --faint: #797777;
+    --accent: #AC75FF; --peri: #899CFA; --mint: #B0F7BA; --warn: #FF8A80;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 13px/1.45 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .page { max-width: 8.5in; margin: 0 auto; padding: 0.45in 0.5in; }
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px;
+           border-bottom: 2px solid var(--accent); padding-bottom: 10px; margin-bottom: 14px; }
+  .eyebrow { color: var(--accent); font-weight: 500; text-transform: uppercase; letter-spacing: .08em; font-size: 10px; }
+  h1 { margin: 2px 0 0; font-size: 24px; font-weight: 700; letter-spacing: -.01em; }
+  .facts { text-align: right; color: var(--muted); font-size: 11px; line-height: 1.6; }
+  .facts b { color: var(--text); font-weight: 600; }
+  .risk { background: rgba(255,138,128,.12); border-left: 3px solid var(--warn); padding: 7px 10px;
+          margin-bottom: 12px; font-weight: 600; }
+  h2 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em;
+       color: var(--accent); margin: 0 0 6px; }
+  section { background: var(--card); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; break-inside: avoid; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .two section { margin-bottom: 0; }
+  .grid-gap { margin-bottom: 10px; }
+  ul, ol { margin: 0; padding-left: 16px; }
+  li { margin: 2px 0; }
+  .pos li::marker { color: var(--mint); }
+  .neg li::marker { color: var(--warn); }
+  .src { color: var(--faint); font-size: 10.5px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { border: 1px solid var(--line); border-radius: 999px; padding: 3px 9px; font-size: 11.5px; }
+  .chip b { font-weight: 600; margin-left: 4px; }
+  .strong b { color: var(--mint); } .weak b { color: var(--warn); } .unknown b { color: var(--muted); }
+  .developing b { color: var(--peri); } .gap { border-style: dashed; color: var(--muted); }
+  .nba { font-size: 15px; font-weight: 600; }
+  .nba .meta { display: block; font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  .q li { margin-bottom: 5px; }
+  .q .why { display: block; color: var(--muted); font-size: 11px; }
+  footer { display: flex; justify-content: space-between; gap: 16px; color: var(--faint); font-size: 10px; margin-top: 6px; }
+
+  @page { size: Letter; margin: 0.4in; }
+  @media print {
+    :root { --bg: #FFFFFF; --card: #F5F5F4; --line: #D9D8D6; --text: #1A1919; --muted: #555453;
+            --faint: #797777; --accent: #8A38F5; --peri: #525B89; --mint: #2E7D45; --warn: #C62828; }
+    body { font-size: 11.5px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { padding: 0; max-width: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div>
+      <div class="eyebrow">Meeting brief · internal</div>
+      <h1>{{customer}}</h1>
+    </div>
+    <div class="facts">
+      <b>{{date}}</b> · CSM {{csm}}<br>
+      {{designation}} · ARR <b>{{arr}}</b><br>
+      Renewal <b>{{renewal}}</b> · Pulse <b>{{pulse}}</b>
+    </div>
+  </header>
+
+  <!-- Only if the red rule fired; otherwise delete this div. -->
+  <div class="risk">At risk: we earn the right before any DXP conversation.</div>
+
+  <div class="two grid-gap">
+    <section class="pos">
+      <h2>Signals: positive</h2>
+      <ul>
+        <!-- repeat --><li>{{signal}} <span class="src">({{source}}, {{date}})</span></li>
+      </ul>
+    </section>
+    <section class="neg">
+      <h2>Signals: negative</h2>
+      <ul>
+        <!-- repeat --><li>{{signal}} <span class="src">({{source}}, {{date}})</span></li>
+      </ul>
+    </section>
+  </div>
+
+  <section>
+    <h2>Use cases</h2>
+    <div class="chips">
+      <!-- repeat; class = strong | weak | unknown | developing | gap -->
+      <span class="chip strong">{{use case}}<b>{{Strong}}</b></span>
+      <span class="chip gap">{{use case}}<b>not in use</b></span>
+    </div>
+    <p class="src" style="margin:8px 0 0">Next DXP step: {{step, or "none this round: earn the right first"}}</p>
+  </section>
+
+  <section>
+    <h2>Next best action</h2>
+    <div class="nba">{{one action}}<span class="meta">Owner {{owner}} · by {{date}}</span></div>
+  </section>
+
+  <section class="q">
+    <h2>Discovery questions</h2>
+    <ol>
+      <!-- repeat, 4–5 --><li>{{question}}<span class="why">A good answer tells us: {{what}}</span></li>
+    </ol>
+  </section>
+
+  <footer>
+    <span>Internal: prepared by {{csm}} with Claude. Not for the customer.</span>
+    <span>Sources: {{sources, one line}}</span>
+  </footer>
+</div>
+</body>
+</html>
